@@ -1,0 +1,18 @@
+node_modules/
+.env
+.env.local
+
+# Foundry build / cache files
+contracts/cache/
+contracts/out/
+contracts/broadcast/
+contracts/deploy-config/
+contracts/deployments/
+
+# Foundry dependency libs
+contracts/lib/
+
+# Next.js build files
+frontend/.next/
+frontend/out/
+
