@@ -1,8 +1,12 @@
 import { AlertCircle } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from './ui/alert'
 import Header from './header'
+import { useAccount } from 'wagmi'
+import { truncateAddress } from '@/lib/utils'
 
 export default function NotNFTHolder() {
+  const { address } = useAccount()
+
   return (
     <div>
       <Header />
@@ -10,8 +14,8 @@ export default function NotNFTHolder() {
         <AlertCircle />
         <AlertTitle>Not an NFT Holder</AlertTitle>
         <AlertDescription>
-          Your wallet (23bs....djcb) does not hold the required NFT to
-          participate in this poll.
+          Your wallet ({truncateAddress(address!)}) does not hold the required
+          NFT to participate in this poll.
           <br />
           <a href="#" className="font-medium underline">
             View collection on OpenSea

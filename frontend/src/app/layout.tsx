@@ -28,7 +28,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientWrapper>{children}</ClientWrapper>
+        <ClientWrapper>
+          <main className="flex min-h-screen flex-col items-center justify-center">
+            {children}
+          </main>
+        </ClientWrapper>
       </body>
     </html>
   )

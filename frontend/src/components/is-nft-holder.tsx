@@ -20,7 +20,7 @@ export default function IsNFTHolder() {
   const [selectedVote, setSelectedVote] = useState<'yes' | 'no' | 'abstain'>(
     'yes',
   )
-  const [hasVoted, setHasVoted] = useState(true)
+  const [hasVoted, setHasVoted] = useState(false)
   const [votingStatus, setVotingStatus] = useState<'idle' | 'pending'>('idle')
 
   return (

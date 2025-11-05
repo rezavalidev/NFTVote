@@ -1,5 +1,4 @@
-import { Wallet } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { CustomConnectButton } from './custom-connect-button'
 
 export default function Disconnected() {
   return (
@@ -8,10 +7,7 @@ export default function Disconnected() {
       <p className="mb-6 text-gray-600">
         Connect your wallet to vote on the latest community poll.
       </p>
-      <Button size="lg">
-        <Wallet className="mr-2" />
-        Connect Wallet
-      </Button>
+      <CustomConnectButton />
     </div>
   )
 }
