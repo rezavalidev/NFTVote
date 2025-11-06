@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { Label } from './ui/label'
 import { Button } from './ui/button'
 import { useState } from 'react'
+import { PollResults } from './poll-results'
 
 export default function IsNFTHolder() {
   const [selectedVote, setSelectedVote] = useState<'yes' | 'no' | 'abstain'>(
@@ -75,8 +76,9 @@ export default function IsNFTHolder() {
 
           {/* Results Section */}
           <div className="space-y-4">
-            <h4 className="font-medium">Live Results</h4>
+            {/* <h4 className="font-medium">Live Results</h4> */}
             {/* <MockBarChart data={pollResults} /> */}
+            <PollResults />
           </div>
         </CardContent>
         {!hasVoted && (
