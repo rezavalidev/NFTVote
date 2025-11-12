@@ -3,7 +3,7 @@
 import { useAccount, useReadContract } from 'wagmi'
 import { erc721abi } from '@/lib/erc721abi'
 import Disconnected from '@/components/disconnected'
-import IsNFTHolder from '@/components/is-nft-holder'
+import CastVote from '@/components/cast-vote'
 import NotNFTHolder from '@/components/not-nft-holder'
 
 const NFT_CONTRACT_ADDRESS = '0x1E8C104D068F22D351859cdBfE41A697A98E6EA2'
@@ -30,7 +30,7 @@ export default function Home() {
   }
 
   if (isConnected && balance !== undefined && balance > 0n) {
-    return <IsNFTHolder />
+    return <CastVote />
   }
 
   if (isConnected) {

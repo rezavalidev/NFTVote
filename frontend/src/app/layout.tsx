@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 import ClientWrapper from './client-wrapper'
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
             {children}
           </main>
         </ClientWrapper>
+        <Toaster richColors />
       </body>
     </html>
   )

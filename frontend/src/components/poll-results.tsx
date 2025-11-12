@@ -1,19 +1,10 @@
 'use client'
 
 import { useReadContracts } from 'wagmi'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-import NFTVoteABI from '@/lib/NFTVote.json'
-import { env } from '@/lib/env'
 import { Loader2 } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { nftVoteContract } from '@/lib/contract-config'
 import { cn } from '@/lib/utils'
-
-const contractAddress = env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`
-
-const nftVoteContract = {
-  address: contractAddress,
-  abi: NFTVoteABI.abi,
-} as const
 
 type PollResultsData = {
   name: string
@@ -114,7 +105,7 @@ export function PollResults() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Live Results</CardTitle>
+        <CardTitle>Poll Results</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <PollResultsDisplay data={pollResultsDataMock} />
@@ -134,7 +125,6 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
   return (
     <div className="w-full space-y-3">
       {data.map((item) => {
-        console.log('item', item)
         const percentage =
           totalVotes === 0 ? 0 : (Number(item.value) / totalVotes) * 100
         console.log('percentage', percentage)

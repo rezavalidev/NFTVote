@@ -8,7 +8,7 @@ const DynamicProviders = dynamic(
   {
     ssr: false,
     loading: () => (
-      <body
+      <div
         style={{
           margin: 0,
           padding: 0,
@@ -20,7 +20,7 @@ const DynamicProviders = dynamic(
         }}
       >
         Loading...
-      </body>
+      </div>
     ),
   },
 )
