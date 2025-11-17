@@ -28,12 +28,16 @@ import { PollResults } from './poll-results'
 export default function CastVote() {
   const { address, isConnected } = useAccount()
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  const { data: hash, isPending, writeContractAsync } = useWriteContract()
 
   const {
-    data: receipt,
+    data: hash,
+    error: writeError,
+    isPending,
+    writeContractAsync,
+  } = useWriteContract()
+
+  const {
+    // data: receipt,
     error: waitError,
     isLoading: isConfirming,
     isSuccess: isSuccess,
@@ -50,6 +54,28 @@ export default function CastVote() {
     },
   })
 
+  const getErrorMessage = () => {
+    if (waitError) {
+      return (
+        (waitError as BaseError)?.shortMessage ||
+        (waitError as Error)?.message ||
+        'Transaction failed during confirmation.'
+      )
+    }
+
+    if (writeError) {
+      return (
+        (writeError as BaseError)?.shortMessage ||
+        (writeError as Error)?.message ||
+        'Something went wrong while sending the transaction.'
+      )
+    }
+
+    return null
+  }
+
+  const activeError = getErrorMessage()
+
   const handleVote = async (choiceId: number) => {
     if (!isConnected) return
     setSelectedChoice(choiceId)
@@ -63,15 +89,6 @@ export default function CastVote() {
     } catch (err) {
       console.error('Transaction failed:', err)
       setSelectedChoice(null)
-
-      const message =
-        err instanceof Error
-          ? err.message
-          : typeof err === 'string'
-            ? err
-            : 'Something went wrong while sending the transaction.'
-
-      setError(message)
     }
   }
 
@@ -80,15 +97,6 @@ export default function CastVote() {
       refetchHasVoted()
     }
   }, [isSuccess, refetchHasVoted])
-
-  if (!error && waitError) {
-    const message =
-      (waitError as BaseError)?.shortMessage ||
-      (waitError as Error)?.message ||
-      'Something went wrong while processing the transaction.'
-
-    setError(message)
-  }
 
   if (hasVoted) {
     return (
@@ -157,9 +165,9 @@ export default function CastVote() {
               <Loader className="mr-2 animate-spin" />
             )}
             {isPending
-              ? 'Confirming...'
+              ? 'Voting...'
               : isConfirming
-                ? 'Voting...'
+                ? 'Confirming...'
                 : 'Cast Vote'}
           </Button>
         </CardFooter>
@@ -167,7 +175,7 @@ export default function CastVote() {
       <StatusAlerts
         isConfirming={isConfirming}
         isSuccess={isSuccess}
-        error={error}
+        error={activeError}
         hash={hash}
       />
     </div>
