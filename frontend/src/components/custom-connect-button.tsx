@@ -1,10 +1,10 @@
 'use client'
 
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Button } from '@/components/ui/button'
 import { Wallet } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-export const CustomConnectButton = () => {
+export const CustomConnectButton = ({ className }: { className?: string }) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -32,7 +32,12 @@ export const CustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button onClick={openConnectModal} type="button" size="lg">
+                  <Button
+                    className={className}
+                    onClick={openConnectModal}
+                    type="button"
+                    size="lg"
+                  >
                     <Wallet className="mr-2" />
                     Connect Wallet
                   </Button>
@@ -42,9 +47,10 @@ export const CustomConnectButton = () => {
               if (chain.unsupported) {
                 return (
                   <Button
+                    className={className}
                     onClick={openChainModal}
                     type="button"
-                    variant="destructive" // Use Shadcn's destructive variant
+                    variant="destructive"
                   >
                     Wrong network
                   </Button>
@@ -52,7 +58,11 @@ export const CustomConnectButton = () => {
               }
 
               return (
-                <Button onClick={openAccountModal} type="button">
+                <Button
+                  className={className}
+                  onClick={openAccountModal}
+                  type="button"
+                >
                   {account.displayName}
                 </Button>
               )
