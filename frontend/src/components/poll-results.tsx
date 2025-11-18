@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useAccount, useReadContracts } from 'wagmi'
 import { Check, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -98,11 +99,21 @@ export function PollResults() {
 }
 
 function PollResultsDisplay({ data }: { data: PollResultsData }) {
+  const [userVote, setUserVote] = useState<string | null>(null)
+
   const { address } = useAccount()
 
-  const userVote = localStorage.getItem(`vote_${address}`)
-
   const totalVotes = data.reduce((acc, item) => acc + Number(item.value), 0)
+
+  useEffect(() => {
+    const getUserVote = () => {
+      setUserVote(localStorage.getItem(`vote_${address}`))
+    }
+
+    if (address) {
+      getUserVote()
+    }
+  }, [address])
 
   if (totalVotes === 0) {
     return <div className="text-sm text-gray-500">No votes cast yet.</div>
