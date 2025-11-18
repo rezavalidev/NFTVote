@@ -95,8 +95,12 @@ export default function CastVote() {
   useEffect(() => {
     if (isSuccess) {
       refetchHasVoted()
+
+      if (address && selectedChoice !== null) {
+        localStorage.setItem(`vote_${address}`, selectedChoice.toString())
+      }
     }
-  }, [isSuccess, refetchHasVoted])
+  }, [isSuccess, refetchHasVoted, address, selectedChoice])
 
   if (hasVoted) {
     return (

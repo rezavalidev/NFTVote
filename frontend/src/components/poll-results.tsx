@@ -1,13 +1,14 @@
 'use client'
 
-import { useReadContracts } from 'wagmi'
-import { Loader2 } from 'lucide-react'
+import { useAccount, useReadContracts } from 'wagmi'
+import { Check, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { nftVoteContract } from '@/lib/contract-config'
 import { cn } from '@/lib/utils'
+import { Badge } from './ui/badge'
 
 type PollResultsData = {
-  name: string
+  name: 'Yes' | 'No' | 'Abstain'
   value: string
   color: string
 }[]
@@ -18,7 +19,6 @@ export function PollResults() {
     isPending,
     error,
   } = useReadContracts({
-    // query: { refetchInterval: 5000 },
     contracts: [
       {
         ...nftVoteContract,
@@ -36,6 +36,7 @@ export function PollResults() {
         args: [],
       },
     ],
+    // query: { refetchInterval: 5000 },
   })
 
   const pollResultsData: PollResultsData = [
@@ -52,24 +53,6 @@ export function PollResults() {
     {
       name: 'Abstain',
       value: results?.[2]?.result?.toString() ?? '0',
-      color: 'bg-gray-400',
-    },
-  ]
-
-  const pollResultsDataMock: PollResultsData = [
-    {
-      name: 'Yes',
-      value: '75',
-      color: 'bg-green-500',
-    },
-    {
-      name: 'No',
-      value: '13',
-      color: 'bg-red-500',
-    },
-    {
-      name: 'Abstain',
-      value: '26',
       color: 'bg-gray-400',
     },
   ]
@@ -108,15 +91,18 @@ export function PollResults() {
         <CardTitle>Poll Results</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <PollResultsDisplay data={pollResultsDataMock} />
+        <PollResultsDisplay data={pollResultsData} />
       </CardContent>
     </Card>
   )
 }
 
 function PollResultsDisplay({ data }: { data: PollResultsData }) {
+  const { address } = useAccount()
+
+  const userVote = localStorage.getItem(`vote_${address}`)
+
   const totalVotes = data.reduce((acc, item) => acc + Number(item.value), 0)
-  console.log('totalVotes', totalVotes)
 
   if (totalVotes === 0) {
     return <div className="text-sm text-gray-500">No votes cast yet.</div>
@@ -127,11 +113,13 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
       {data.map((item) => {
         const percentage =
           totalVotes === 0 ? 0 : (Number(item.value) / totalVotes) * 100
-        console.log('percentage', percentage)
         return (
           <div key={item.name} className="space-y-1">
             <div className="flex justify-between text-sm font-medium">
-              <span>{item.name}</span>
+              <span>
+                {item.name}
+                {userVote === item.value.toString() && <UserBadge />}
+              </span>
               <span className="text-gray-600">
                 {item.value} ({percentage.toFixed(1)}%)
               </span>
@@ -149,5 +137,16 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
         )
       })}
     </div>
+  )
+}
+
+function UserBadge() {
+  return (
+    <Badge
+      variant="outline"
+      className="ml-2 border-green-200 bg-green-50 text-green-700"
+    >
+      <Check className="mr-1 h-3 w-3" /> You
+    </Badge>
   )
 }
