@@ -1,8 +1,8 @@
 import { AlertCircle } from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from './ui/alert'
-import Header from './header'
 import { useAccount } from 'wagmi'
 import { truncateAddress } from '@/lib/utils'
+import { Alert, AlertDescription, AlertTitle } from './ui/alert'
+import Header from './header'
 import { MintNFTButton } from './mint-nft-btn'
 
 export default function NotNFTHolder({

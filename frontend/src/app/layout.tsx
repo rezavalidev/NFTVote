@@ -7,8 +7,9 @@ import ClientWrapper from './client-wrapper'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NFTVote',
-  description: 'Token-gated polling dApp',
+  title: 'NFTVote | Decentralized Governance',
+  description:
+    'A token-gated voting platform for the Citizen NFT collection on Sepolia.',
 }
 
 export default async function RootLayout({

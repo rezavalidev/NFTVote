@@ -41,8 +41,6 @@ export function PollResults() {
     // query: { refetchInterval: 5000 },
   })
 
-  console.log('results', results)
-
   const pollResultsData: PollResultsData = [
     {
       name: 'Yes',
@@ -131,7 +129,6 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
   return (
     <div className="w-full space-y-3">
       {data.map((item) => {
-        console.log(item)
         const percentage =
           totalVotes === 0 ? 0 : (Number(item.value) / totalVotes) * 100
         return (
