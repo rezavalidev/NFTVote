@@ -3,25 +3,27 @@ import { Alert, AlertDescription, AlertTitle } from './ui/alert'
 import Header from './header'
 import { useAccount } from 'wagmi'
 import { truncateAddress } from '@/lib/utils'
+import { MintNFTButton } from './mint-nft-btn'
 
-export default function NotNFTHolder() {
+export default function NotNFTHolder({
+  onMintSuccess,
+}: {
+  onMintSuccess: () => void
+}) {
   const { address } = useAccount()
 
   return (
     <div>
       <Header />
-      <Alert variant="destructive" className="mt-16">
+      <Alert variant="destructive" className="mb-4 border-red-200 bg-red-50">
         <AlertCircle />
         <AlertTitle>Not an NFT Holder</AlertTitle>
         <AlertDescription>
           Your wallet ({truncateAddress(address!)}) does not hold the required
           NFT to participate in this poll.
-          <br />
-          <a href="#" className="font-medium underline">
-            View collection on OpenSea
-          </a>
         </AlertDescription>
       </Alert>
+      <MintNFTButton onMintSuccess={onMintSuccess} />
     </div>
   )
 }

@@ -12,6 +12,7 @@ type PollResultsData = {
   name: 'Yes' | 'No' | 'Abstain'
   value: string
   color: string
+  id: number
 }[]
 
 export function PollResults() {
@@ -40,21 +41,26 @@ export function PollResults() {
     // query: { refetchInterval: 5000 },
   })
 
+  console.log('results', results)
+
   const pollResultsData: PollResultsData = [
     {
       name: 'Yes',
       value: results?.[0]?.result?.toString() ?? '0',
       color: 'bg-green-500',
+      id: 0,
     },
     {
       name: 'No',
       value: results?.[1]?.result?.toString() ?? '0',
       color: 'bg-red-500',
+      id: 1,
     },
     {
       name: 'Abstain',
       value: results?.[2]?.result?.toString() ?? '0',
       color: 'bg-gray-400',
+      id: 2,
     },
   ]
 
@@ -99,7 +105,7 @@ export function PollResults() {
 }
 
 function PollResultsDisplay({ data }: { data: PollResultsData }) {
-  const [userVote, setUserVote] = useState<string | null>(null)
+  const [userVote, setUserVote] = useState<number | null>(null)
 
   const { address } = useAccount()
 
@@ -107,7 +113,10 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
 
   useEffect(() => {
     const getUserVote = () => {
-      setUserVote(localStorage.getItem(`vote_${address}`))
+      const vote = localStorage.getItem(`vote_${address}`)
+      if (vote !== null) {
+        setUserVote(Number(vote))
+      }
     }
 
     if (address) {
@@ -122,6 +131,7 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
   return (
     <div className="w-full space-y-3">
       {data.map((item) => {
+        console.log(item)
         const percentage =
           totalVotes === 0 ? 0 : (Number(item.value) / totalVotes) * 100
         return (
@@ -129,7 +139,7 @@ function PollResultsDisplay({ data }: { data: PollResultsData }) {
             <div className="flex justify-between text-sm font-medium">
               <span>
                 {item.name}
-                {userVote === item.value.toString() && <UserBadge />}
+                {userVote === item.id && <UserBadge />}
               </span>
               <span className="text-gray-600">
                 {item.value} ({percentage.toFixed(1)}%)

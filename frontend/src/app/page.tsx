@@ -5,13 +5,16 @@ import { erc721abi } from '@/lib/erc721abi'
 import Disconnected from '@/components/disconnected'
 import CastVote from '@/components/cast-vote'
 import NotNFTHolder from '@/components/not-nft-holder'
-
-const NFT_CONTRACT_ADDRESS = '0x1E8C104D068F22D351859cdBfE41A697A98E6EA2'
+import { NFT_CONTRACT_ADDRESS } from '@/lib/constants'
 
 export default function Home() {
   const { address, isConnected } = useAccount()
 
-  const { data: balance, isLoading } = useReadContract({
+  const {
+    data: balance,
+    isLoading,
+    refetch,
+  } = useReadContract({
     address: NFT_CONTRACT_ADDRESS,
     abi: erc721abi,
     functionName: 'balanceOf',
@@ -34,7 +37,7 @@ export default function Home() {
   }
 
   if (isConnected) {
-    return <NotNFTHolder />
+    return <NotNFTHolder onMintSuccess={() => refetch()} />
   }
 
   return <Disconnected />
