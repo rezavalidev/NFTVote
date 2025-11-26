@@ -21,7 +21,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <ClientWrapper>
-          <main className="flex min-h-screen flex-col items-center justify-center">
+          <main className="flex min-h-screen flex-col items-center justify-center px-4 py-24 sm:px-6 lg:px-8">
             {children}
           </main>
         </ClientWrapper>
