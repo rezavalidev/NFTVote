@@ -6,7 +6,7 @@
 
 A full-stack decentralized voting application that demonstrates token-gating, smart contract interaction, and modern Web3 frontend patterns. This dApp allows holders of a specific NFT collection to cast votes on governance proposals.
 
-**Live Demo:** [https://nftvote.vercel.app/]
+**Live Demo:** [https://nftvote.vercel.app/](https://nftvote.vercel.app/)
 
 ---
 
