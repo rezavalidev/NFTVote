@@ -38,8 +38,10 @@ export const CustomConnectButton = ({ className }: { className?: string }) => {
                     type="button"
                     size="lg"
                   >
-                    <Wallet className="mr-2" />
-                    Connect Wallet
+                    <span className="flex items-center gap-2 px-6 sm:px-16">
+                      <Wallet className="mr-2" size={24} />
+                      Connect Wallet
+                    </span>
                   </Button>
                 )
               }
