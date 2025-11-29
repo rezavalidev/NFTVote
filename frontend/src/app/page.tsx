@@ -6,6 +6,7 @@ import Disconnected from '@/components/disconnected'
 import CastVote from '@/components/cast-vote'
 import NotNFTHolder from '@/components/not-nft-holder'
 import { NFT_CONTRACT_ADDRESS } from '@/lib/constants'
+import FullPageLoader from '@/components/full-page-loader'
 
 export default function Home() {
   const { address, isConnected } = useAccount()
@@ -26,9 +27,10 @@ export default function Home() {
 
   if (isLoading && isConnected) {
     return (
-      <div className="mx-auto mt-10 w-full max-w-md rounded-lg border bg-white p-6 text-center shadow-md">
-        <p className="text-gray-700">Checking your NFT balance...</p>
-      </div>
+      <FullPageLoader
+        text="Checking your NFT balance..."
+        subtext="Please wait."
+      />
     )
   }
 

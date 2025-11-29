@@ -5,7 +5,7 @@ export default function Disconnected() {
   return (
     <div className="animate-in slide-in-from-bottom-4 space-y-8 text-center duration-500">
       <Badge className="mb-4 border-transparent bg-[#118ab2]/10 px-4 py-1.5 text-sm text-[#118ab2]">
-        NFTVote (Beta)
+        Governance Portal
       </Badge>
       <h1 className="text-5xl font-extrabold tracking-tight text-gray-900 md:text-6xl">
         Your Voice,
@@ -21,7 +21,7 @@ export default function Disconnected() {
       <div className="pt-4">
         <CustomConnectButton className="h-14 rounded-xl bg-[#118ab2] text-lg text-white shadow-xl shadow-[#118ab2]/20 hover:bg-[#0c6b8c] active:translate-y-px" />
       </div>
-      <p className="pt-4 text-xs text-gray-400">Powered by Sepolia</p>
+      <p className="text-sm text-gray-400">Sepolia Testnet Only</p>
     </div>
   )
 }
